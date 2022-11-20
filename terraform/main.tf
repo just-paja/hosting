@@ -26,8 +26,14 @@ module "services" {
   source = "./modules/services"
 }
 
-module "kubernetes" {
+module "sql" {
   depends_on = [module.services]
+  source     = "./modules/sql"
+  region     = var.GCP_REGION
+}
+
+module "kubernetes" {
+  depends_on = [module.services, module.sql]
   source     = "./modules/kubernetes"
   location   = local.zone
 }
