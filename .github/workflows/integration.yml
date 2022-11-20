@@ -11,6 +11,7 @@ jobs:
   validate:
     name: Validate
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - uses: actions/checkout@v2
       - uses: hashicorp/setup-terraform@v2
@@ -26,3 +27,4 @@ jobs:
           terraform fmt --check
           terraform init --backend-config "bucket=${{ secrets.GCP_BACKEND_BUCKET }}"
           terraform validate
+          terraform plan
