@@ -23,21 +23,26 @@ resource "google_project_service" "cloudresource" {
 }
 
 resource "google_project_service" "iam" {
-  service = "iam.googleapis.com"
+  depends_on = [google_project_service.cloudresource]
+  service    = "iam.googleapis.com"
 }
 
 resource "google_project_service" "cloudsql" {
-  service = "sqladmin.googleapis.com"
+  depends_on = [google_project_service.cloudresource]
+  service    = "sqladmin.googleapis.com"
 }
 
 resource "google_project_service" "cloudbuild" {
-  service = "cloudbuild.googleapis.com"
+  depends_on = [google_project_service.cloudresource]
+  service    = "cloudbuild.googleapis.com"
 }
 
 resource "google_project_service" "containerregistry" {
-  service = "containerregistry.googleapis.com"
+  depends_on = [google_project_service.cloudresource]
+  service    = "containerregistry.googleapis.com"
 }
 
 resource "google_project_service" "kubernetes" {
-  service = "container.googleapis.com"
+  depends_on = [google_project_service.cloudresource]
+  service    = "container.googleapis.com"
 }
