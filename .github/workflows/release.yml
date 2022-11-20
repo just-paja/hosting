@@ -1,0 +1,20 @@
+---
+name: Deployment
+on: workflow_dispatch
+
+jobs:
+  validate:
+    name: Deploy infrastructure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '18'
+      - run: npm ci
+      - run: |
+          VERSION=$(git-conventional-commits version)
+          npm version ${VERSION} --no-git-tag-version
+          git-conventional-commits changelog --release ${VERSION} --file CHANGELOG.md
+          git commit -am "docs(release): create ${VERSION} change"
+          git tag -a -m "build(release): ${VERSION}" "v${VERSION}"

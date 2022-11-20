@@ -1,0 +1,22 @@
+---
+name: Deployment
+on:
+  push:
+    branches-ignore:
+      - '**'
+    tags:
+      - 'v*'
+
+jobs:
+  validate:
+    name: Deploy infrastructure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: hashicorp/setup-terraform@v2
+        with:
+          GCP_CREDENTIALS: ${{ secrets.TF_VAR_GCP_CREDENTIALS }}
+          GCP_PROJECT: ${{ secrets.TF_VAR_GCP_PROJECT }}
+          GCP_REGION: ${{ secrets.TF_VAR_GCP_REGION }}
+      - run: terraform init --backend-config "bucket=${{ secrets.TF_VAR_BACKEND_BUCKET }}"
+      - run: terraform apply --auto-approve
