@@ -22,7 +22,7 @@ jobs:
       - name: Deploy infrastructure
         working-directory: terraform
         run: |
-          echo $GCP_CREDENTIALS | base64 -d > ./credentials.json
+          echo ${{ secrets.GCP_CREDENTIALS }} | base64 -d > ./credentials.json
           export GOOGLE_APPLICATION_CREDENTIALS=$(realpath ./credentials.json)
           terraform init --backend-config "bucket=${{ secrets.GCP_BACKEND_BUCKET }}"
           terraform apply --auto-approve

@@ -15,12 +15,14 @@ jobs:
       - uses: actions/checkout@v2
       - uses: hashicorp/setup-terraform@v2
         with:
-          GCP_CREDENTIALS: ${{ secrets.TF_VAR_GCP_CREDENTIALS }}
-          GCP_PROJECT: ${{ secrets.TF_VAR_GCP_PROJECT }}
-          GCP_REGION: ${{ secrets.TF_VAR_GCP_REGION }}
+          GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+          GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
+          GCP_REGION: ${{ secrets.GCP_REGION }}
       - name: Verify terraform integrity
         working-directory: ./terraform
         run: |
+          echo ${{ secrets.GCP_CREDENTIALS }} | base64 -d > ./credentials.json
+          export GOOGLE_APPLICATION_CREDENTIALS=$(realpath ./credentials.json)
           terraform fmt --check
-          terraform init --backend-config "bucket=${{ secrets.TF_VAR_BACKEND_BUCKET }}"
+          terraform init --backend-config "bucket=${{ secrets.GCP_BACKEND_BUCKET }}"
           terraform validate
