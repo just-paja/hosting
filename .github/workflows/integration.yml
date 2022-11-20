@@ -21,7 +21,7 @@ jobs:
       - name: Verify terraform integrity
         working-directory: ./terraform
         run: |
-          echo '${{ secrets.GCP_CREDENTIALS }}' | base64 -d > ./credentials.json
+          echo '${{ secrets.GCP_CREDENTIALS }}' > ./credentials.json
           export GOOGLE_APPLICATION_CREDENTIALS=$(realpath ./credentials.json)
           terraform fmt --check
           terraform init --backend-config "bucket=${{ secrets.GCP_BACKEND_BUCKET }}"
