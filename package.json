@@ -1,0 +1,22 @@
+{
+  "name": "stargazer",
+  "version": "0.1.0",
+  "description": "Simple hosting project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/just-paja/hosting.git"
+  },
+  "author": "Pavel Žák <pavel@zak.global>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/just-paja/hosting/issues"
+  },
+  "homepage": "https://github.com/just-paja/hosting#readme",
+  "devDependencies": {
+    "git-conventional-commits": "^2.3.0"
+  }
+}
