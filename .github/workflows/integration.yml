@@ -11,6 +11,7 @@ jobs:
   validate:
     name: Validate
     runs-on: ubuntu-latest
+    concurrency: production
     environment: production
     steps:
       - uses: actions/checkout@v2
