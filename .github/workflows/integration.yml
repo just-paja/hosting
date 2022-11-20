@@ -18,7 +18,9 @@ jobs:
           GCP_CREDENTIALS: ${{ secrets.TF_VAR_GCP_CREDENTIALS }}
           GCP_PROJECT: ${{ secrets.TF_VAR_GCP_PROJECT }}
           GCP_REGION: ${{ secrets.TF_VAR_GCP_REGION }}
-      - run: terraform fmt --check
-      - run: terraform init --backend-config "bucket=${{ secrets.TF_VAR_BACKEND_BUCKET }}"
-      - run: terraform validate
-      - run: terraform plan
+      - name: Verify terraform integrity
+        working-directory: ./terraform
+        run: |
+          terraform fmt --check
+          terraform init --backend-config "bucket=${{ secrets.TF_VAR_BACKEND_BUCKET }}"
+          terraform validate
