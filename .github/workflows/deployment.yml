@@ -9,14 +9,18 @@ on:
 
 jobs:
   validate:
-    name: Deploy infrastructure
+    name: Deploy
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - uses: actions/checkout@v2
       - uses: hashicorp/setup-terraform@v2
         with:
-          GCP_CREDENTIALS: ${{ secrets.TF_VAR_GCP_CREDENTIALS }}
-          GCP_PROJECT: ${{ secrets.TF_VAR_GCP_PROJECT }}
-          GCP_REGION: ${{ secrets.TF_VAR_GCP_REGION }}
-      - run: terraform init --backend-config "bucket=${{ secrets.TF_VAR_BACKEND_BUCKET }}"
-      - run: terraform apply --auto-approve
+          GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+          GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
+          GCP_REGION: ${{ secrets.GCP_REGION }}
+      - run: |
+          echo $GCP_CREDENTIALS | base64 -d > ./credentials.json
+          export GOOGLE_APPLICATION_CREDENTIALS=$(realpath ./credentials.json)
+          terraform init --backend-config "bucket=${{ secrets.GCP_BACKEND_BUCKET }}"
+          terraform apply --auto-approve
