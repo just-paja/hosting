@@ -22,4 +22,5 @@ jobs:
           git add CHANGELOG.md
           git commit -am "docs(release): create ${VERSION}"
           git tag -a -m "build(release): ${VERSION}" "v${VERSION}"
-          git push --atomic
+          git push --all
+          git push --tags
