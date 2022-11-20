@@ -18,6 +18,10 @@ provider "google" {
   credentials = var.GCP_CREDENTIALS
 }
 
+resource "google_project_service" "cloudresource" {
+  service = "cloudresource.googleapis.com"
+}
+
 resource "google_project_service" "iam" {
   service = "iam.googleapis.com"
 }
