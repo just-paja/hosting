@@ -6,6 +6,10 @@ variable "GCP_REGION" {
   default = "europe-west1"
 }
 
+locals {
+  zone = "${var.GCP_REGION}a"
+}
+
 terraform {
   backend "gcs" {
     prefix = "hosting"
@@ -20,4 +24,10 @@ provider "google" {
 
 module "services" {
   source = "./modules/services"
+}
+
+module "kubernetes" {
+  depends_on = [module.services]
+  source     = "./modules/kubernetes"
+  location   = local.zone
 }
