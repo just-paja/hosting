@@ -26,4 +26,4 @@ jobs:
           echo '${{ secrets.GCP_CREDENTIALS }}' > ./credentials.json
           export GOOGLE_APPLICATION_CREDENTIALS=$(realpath ./credentials.json)
           terraform init --backend-config "bucket=${{ secrets.GCP_BACKEND_BUCKET }}"
-          terraform apply --auto-approve
+          terraform apply --input=false --auto-approve

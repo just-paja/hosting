@@ -28,4 +28,4 @@ jobs:
           terraform fmt --check
           terraform init --backend-config "bucket=${{ secrets.GCP_BACKEND_BUCKET }}"
           terraform validate
-          terraform plan
+          terraform plan --input=false
