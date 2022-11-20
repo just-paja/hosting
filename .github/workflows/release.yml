@@ -13,7 +13,8 @@ jobs:
           node-version: '18'
       - run: npm ci
       - run: |
-          VERSION=$(git-conventional-commits version)
+          export PATH="$(realpath ./node_modules/.bin):$PATH"
+          export VERSION=$(git-conventional-commits version)
           npm version ${VERSION} --no-git-tag-version
           git-conventional-commits changelog --release ${VERSION} --file CHANGELOG.md
           git commit -am "docs(release): create ${VERSION} change"
